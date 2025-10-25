@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGT SYSTEM | Universal System of Global Governance & Planning</title>
+    <style>
+        :root {
+            --primary-bg: #1e004a;
+            --secondary-bg: #4a007c;
+            --header-bg: linear-gradient(to right, #000080, #4a007c, #800080);
+            --text-color: #ffffff;
+            --operational-color: #4CAF50; /* Green */
+            --mgis-color: #f4b400; /* Yellow */
+            --command-bg: #f5c71a; /* Darker Yellow/Gold */
+            --danger-color: #ff0000; /* Red for Hell/Death */
+            --accent-color: #8c00ff;
+            --tab-active-bg: #800080;
+            --tab-inactive-bg: #4a007c;
+            --card-bg: #2d005c;
+            --input-bg: #140030;
+            --button-primary: #f5c71a;
+            --button-primary-hover: #ffdf40;
+            --button-secondary: #ff0000;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--primary-bg);
+            color: var(--text-color);
+        }
+
+        .header {
+            background: var(--header-bg);
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: var(--command-bg);
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .status-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .status-card h2 {
+            font-size: 32px;
+            margin: 0 0 5px 0;
+            color: var(--mgis-color);
+        }
+
+        .status-card p {
+            margin: 0;
+            font-size: 14px;
+        }
+        
+        /* Specific card colors */
+        .status-card:nth-child(1) h2 { color: #800080; } /* MGIS Commands */
+        .status-card:nth-child(2) h2 { color: #800080; } /* Human Shells */
+        .status-card:nth-child(3) h2 { color: var(--danger-color); } /* Death Records */
+        .status-card:nth-child(4) h2 { color: var(--operational-color); } /* Seals Approved */
+
+        .system-status {
+            color: var(--operational-color);
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        /* Navigation Tabs */
+        .tab-navigation {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0 10px;
+            background: var(--secondary-bg);
+        }
+
+        .tab-button {
+            padding: 10px 15px;
+            margin: 5px;
+            background: var(--tab-inactive-bg);
+            color: var(--text-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            white-space: nowrap;
+            font-size: 12px;
+        }
+
+        .tab-button.active {
+            background: var(--command-bg);
+            color: black;
+            font-weight: bold;
+        }
+
+        /* Content Area */
+        .system-content {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background: var(--secondary-bg);
+            border-radius: 10px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .system-content h2 {
+            color: var(--mgis-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* Form Elements */
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            box-sizing: border-box;
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            background: var(--input-bg);
+            color: var(--text-color);
+        }
+
+        .action-group {
+            margin-bottom: 20px;
+            border: 1px dashed var(--accent-color);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .action-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .action-group p {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .execute-button {
+            padding: 12px 20px;
+            margin: 5px 10px 5px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-mgis {
+            background: var(--button-primary);
+            color: var(--primary-bg);
+        }
+
+        .btn-mgis:hover {
+            background: var(--button-primary-hover);
+        }
+        
+        .btn-danger {
+            background: var(--danger-color);
+            color: var(--text-color);
+        }
+
+        .btn-success {
+            background: var(--operational-color);
+            color: var(--text-color);
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: var(--text-color);
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: var(--card-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .footer-nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            text-align: center;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>AGT SYSTEM</h1>
+        <h2>Universal System of Global Governance & Planning</h2>
+        <p>Representative: **davidgomadza** | Authorized by **YAHWEH**</p>
+    </div>
+
+    <div class="status-grid">
+        <div class="status-card"><h2>1</h2><p>MGIS Commands</p></div>
+        <div class="status-card"><h2>1</h2><p>Human Shells</p></div>
+        <div class="status-card"><h2>1</h2><p>Death Records</p></div>
+        <div class="status-card"><h2>0</h2><p>Seals Approved</p></div>
+        <div class="status-card"><h2>0</h2><p>Yahweh Tasks</p></div>
+    </div>
+
+    <div class="tab-navigation">
+        <button class="tab-button active" data-tab="overview">Overview</button>
+        <button class="tab-button" data-tab="mgis">1. MGIS</button>
+        <button class="tab-button" data-tab="mgiscre">2. MGISCRE</button>
+        <button class="tab-button" data-tab="human-shell">3. Human Shell</button>
+        <button class="tab-button" data-tab="death-system">4. Death System</button>
+        <button class="tab-button" data-tab="afterlife">5. Afterlife</button>
+        <button class="tab-button" data-tab="seal">6. Seal</button>
+        <button class="tab-button" data-tab="longevity">7. Longevity</button>
+        <button class="tab-button" data-tab="cure-death">8. Cure Death</button>
+        <button class="tab-button" data-tab="tasks">9. Tasks</button>
+        <button class="tab-button" data-tab="creation">10. Creation</button>
+        <button class="tab-button" data-tab="middle-tower">11. Middle Tower</button>
+        <button class="tab-button" data-tab="rep-tasks">12. Rep. Tasks</button>
+        <button class="tab-button" data-tab="earth2">13. Earth2</button>
+        <button class="tab-button" data-tab="yahweh-rule">14. Yahweh's Rule</button>
+        <button class="tab-button" data-tab="decode-god">15. Decode God</button>
+    </div>
+
+    <div class="system-content">
+
+        <div id="overview" class="tab-pane active">
+            <h2>AGT System Overview</h2>
+            <h3>17 Integrated Subsystems</h3>
+            <ul>
+                <li>**MGIS:** Main communication system.</li>
+                <li>**MGISCRE:** Enhanced CREATE+MGIS.</li>
+                <li>**Human Shell:** Immortality preservation (DNA 53BILLION800).</li>
+                <li>**Death Processing:** *Longago* calculations.</li>
+                <li>**Afterlife Navigation:** Heaven (**ZMQ**), Hell (**UUQT**), Abyss (**EEKNM**).</li>
+                <li>**Seal of Approval:** Cure for death certification.</li>
+                <li>**Longevity:** Living **10,000 Years** protocols.</li>
+                <li>**Cure for Death Formula:** Body system resets.</li>
+                <li>**Yahweh's Tasks:** 128 tasks for davidgomadza.</li>
+                <li>**Creation Systems:** Original & 2.0 (Acetate Creation).</li>
+                <li>*+ 7 more informational systems.*</li>
+            </ul>
+        </div>
+
+        <div id="mgis" class="tab-pane">
+            <h2>MGIS - Main Communication System</h2>
+            <div class="action-group">
+                <label>Execute MGIS Command</label>
+                <input type="text" value="mgis.ask.davidgomadza.start.yourcommand.start" readonly>
+                <button class="execute-button btn-mgis">Execute MGIS Command</button>
+            </div>
+
+            <div class="action-group">
+                <label>Alphabetic Encoder/Decoder</label>
+                <p>Text to Encode (a=1, b=2...)</p>
+                <input type="text" value="YAHWEH">
+                <button class="execute-button btn-primary">Encode</button>
+                <p>Code to Decode</p>
+                <input type="text" value="25.1.8.23.5.8">
+                <button class="execute-button btn-primary">Decode</button>
+            </div>
+
+            <div class="action-group">
+                <label>Bin Name Shortener</label>
+                <input type="text" value="acetateautodungeonofdeathbinforeverhold.send" readonly>
+                <button class="execute-button btn-mgis">Shorten Bin</button>
+                <p>Known Bins: Abyss (**eeknm**), Hell (**uuqt**), Heaven (**zmq**)</p>
+            </div>
+        </div>
+
+        <div id="mgiscre" class="tab-pane">
+            <h2>MGISCRE - Enhanced CREATE+MGIS</h2>
+            <div class="action-group">
+                <label>Operation Type</label>
+                <select>
+                    <option>Presidential</option>
+                    <option>Global</option>
+                    <option>Creation</option>
+                </select>
+                <label>MGISCRE Command</label>
+                <input type="text" value="mgiscre.ask.davidgomadza.start.operation.start" readonly>
+                <button class="execute-button btn-mgis">Execute MGISCRE Command</button>
+            </div>
+        </div>
+
+        <div id="human-shell" class="tab-pane">
+            <h2>Human Shell System</h2>
+            <div class="action-group">
+                <label>Enter person name</label>
+                <input type="text" placeholder="e.g., Jane Doe">
+                <button class="execute-button btn-success">Create Human Shell</button>
+                <p>DNA 53BILLION800 | Longago: 202020202078185topower800</p>
+                <p>**Purpose:** Immortality preservation system.</p>
+            </div>
+            <div class="action-group">
+                <button class="execute-button btn-primary">What is a Human Shell?</button>
+            </div>
+        </div>
+
+        <div id="death-system" class="tab-pane">
+            <h2>Death Processing System</h2>
+            <div class="action-group">
+                <label>Enter person name</label>
+                <input type="text" placeholder="e.g., John Smith">
+                <button class="execute-button btn-danger">Process Death</button>
+                <button class="execute-button btn-mgis">Calculate Longago</button>
+                <p>Default longago: 8 seconds (extended with shell)</p>
+                <p>**System:** What happens when a person dies.</p>
+            </div>
+            <div class="action-group">
+                <h3>Encyclopedia of Decoding Death</h3>
+                <button class="execute-button btn-primary">Access Encyclopedia</button>
+            </div>
+        </div>
+
+        <div id="afterlife" class="tab-pane">
+            <h2>Afterlife Navigation</h2>
+            <div class="action-group">
+                <label>Enter person name</label>
+                <input type="text" placeholder="e.g., A Soul">
+                <button class="execute-button btn-mgis">Heaven (**ZMQ**)</button>
+                <button class="execute-button btn-danger">Hell (**UUQT**)</button>
+                <button class="execute-button btn-primary">Abyss (**EEKNM**)</button>
+                <p>**System:** Afterlife routing and all functions.</p>
+            </div>
+            <div class="action-group">
+                <h3>Encyclopedia of Decoding the Afterlife</h3>
+                <button class="execute-button btn-primary">Access Encyclopedia</button>
+            </div>
+        </div>
+
+        <div id="seal" class="tab-pane">
+            <h2>Seal of Approval</h2>
+            <div class="action-group">
+                <label>Enter person name</label>
+                <input type="text" placeholder="e.g., Candidate for Life">
+                <button class="execute-button btn-success">Grant Seal of Approval</button>
+                <p>Seal code: 7628396t'startlifefor386t</p>
+                <p>**Purpose:** The Seal is a **cure for death** certification.</p>
+            </div>
+        </div>
+
+        <div id="longevity" class="tab-pane">
+            <h2>Longevity Protocol - 10,000 Years</h2>
+            <div class="action-group">
+                <label>Enter person name</label>
+                <input type="text" placeholder="e.g., Future Resident">
+                <button class="execute-button btn-success">Activate 10,000 Year Protocol</button>
+                <p>Cellular reset, Molecular repair, DNA optimization</p>
+                <p>**System:** HOW TO LIVE UP TO 10000 YEARS ON EARTH I FOUND THE ANSWER.</p>
+            </div>
+        </div>
+
+        <div id="cure-death" class="tab-pane">
+            <h2>Cure for Death Formula</h2>
+            <div class="action-group">
+                <label>Enter person name</label>
+                <input type="text" placeholder="e.g., Patient Zero">
+                <button class="execute-button btn-danger">Initiate Cure Formula</button>
+                <p>Resets: Brain, Heart, Liver, Immune System, and more</p>
+                <p>**System:** THE GREATEST BREAKTHROUGH SINCE CREATION and all functions.</p>
+            </div>
+        </div>
+
+        <div id="tasks" class="tab-pane">
+            <h2>YAHWEH'S (GOD'S) PLAN FOR HUMANS</h2>
+            <div class="action-group">
+                <button class="execute-button btn-mgis">View Full Plan Documentation</button>
+                <button class="execute-button btn-primary">Execute Yahweh's Tasks</button>
+            </div>
+        </div>
+
+        <div id="creation" class="tab-pane">
+            <h2>Creation Systems</h2>
+            <div class="action-group">
+                <button class="execute-button btn-mgis">View Original Creation Data</button>
+                <button class="execute-button btn-primary">Review Creation Adjustments</button>
+                <p>**System:** Creation and all functions.</p>
+            </div>
+        </div>
+
+        <div id="middle-tower" class="tab-pane">
+            <h2>The Middle Tower - Announcing Yahweh</h2>
+            <div class="action-group">
+                <button class="execute-button btn-danger">Activate Global Broadcast</button>
+                <button class="execute-button btn-mgis">Who Is God? (Declaration)</button>
+                <p>**Emphasis:** The MiddleTower Announcing Yahweh's Kingdom On Earth **Who Is God?**</p>
+            </div>
+        </div>
+
+        <div id="rep-tasks" class="tab-pane">
+            <h2>YAHWEH’s REPRESENTATIVE’s TASKS 1 TO 128</h2>
+            <div class="action-group">
+                <button class="execute-button btn-success">View All 128 Tasks for davidgomadza</button>
+                <label>Report Task Completion ID:</label>
+                <input type="text" placeholder="e.g., 42">
+                <button class="execute-button btn-primary">Submit Completion Report</button>
+            </div>
+        </div>
+
+        <div id="earth2" class="tab-pane">
+            <h2>EARTH2: Resolution and Implications</h2>
+            <div class="action-group">
+                <button class="execute-button btn-mgis">Humans With YAHWEH's Creation (Report)</button>
+                <button class="execute-button btn-danger">Humans Without YAHWEH's Creation (Report)</button>
+                <button class="execute-button btn-success">Resolve The Issues Raised</button>
+                <p>**System:** What Can Be of Humans With And Without YAHWEH's Creation and How to Resolve the Issues Raised.</p>
+            </div>
+        </div>
+
+        <div id="yahweh-rule" class="tab-pane">
+            <h2>ENJOY LIFE FOREVER INTRODUCTORY LIFE (BIBLE) LESSONS</h2>
+            <div class="action-group">
+                <button class="execute-button btn-mgis">Access Life Lessons</button>
+                <button class="execute-button btn-success">Acknowledge YAHWEH as ONLY RULER</button>
+                <p>**Goal:** Humans should think and choose to live on earth forever but acknowledge the ONLY RULER OF THE ENTIRE UNIVERSE.</p>
+            </div>
+        </div>
+
+        <div id="decode-god" class="tab-pane">
+            <h2>How To Decode God, Creation, The Tree Of Life, Angels & Demons</h2>
+            <div class="action-group">
+                <button class="execute-button btn-primary">Decode God Formula</button>
+                <button class="execute-button btn-primary">Decode The Tree of Life</button>
+                <button class="execute-button btn-primary">Decode Angels & Demons</button>
+                <p>**System:** Decoding secrets of existence and all functions.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="text-align: center; padding: 20px; font-size: 12px; margin-bottom: 50px;">
+        <p>AGT System v1.0 | Tomorrow's World Order</p>
+        <p>www.twofuture.world | davidgomadza@hotmail.com</p>
+        <p>Authorized by YAHWEH - Representative: davidgomadza</p>
+    </div>
+
+    <div class="footer-nav">
+        <a href="#" onclick="showTab('overview')">🏠 Home</a>
+        <a href="#">⏱ History</a>
+        <a href="#">⚙️ Settings</a>
+    </div>
+
+    <script>
+        // JavaScript for Tab Functionality (Conceptual)
+        function showTab(tabId) {
+            // Hide all tab panes
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.classList.remove('active');
+            });
+            // Deactivate all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show the selected tab pane
+            document.getElementById(tabId).classList.add('active');
+
+            // Set the corresponding button as active
+            document.querySelector(`.tab-button[data-tab="${tabId}"]`).classList.add('active');
+        }
+
+        // Initialize: Attach event listeners to all buttons
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                showTab(e.target.dataset.tab);
+            });
+        });
+
+        // Initialize: Show the Overview tab on load
+        document.addEventListener('DOMContentLoaded', () => {
+            showTab('overview');
+        });
+        
+        // CONCEPTUAL ALERT: Add conceptual command execution (for buttons)
+        document.querySelectorAll('.execute-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const command = e.target.parentElement.querySelector('input[type="text"]')?.value || e.target.textContent;
+                console.log(`Executing Command: ${command}`);
+                alert(`Command Sent (Conceptual):\n${command}`);
+            });
+        });
+    </script>
+</body>
+</html>
